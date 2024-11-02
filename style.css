@@ -1,0 +1,30 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+input[type="text"]
+{
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button
+{
+    padding: 2px 8px;
+}
+
+.form-fields__item
+{
+    display: flex;
+}
+
+.form-buttons button
+{
+    display: block;
+}
+
+
