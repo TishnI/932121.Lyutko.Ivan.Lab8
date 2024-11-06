@@ -1,10 +1,9 @@
 const addButtonElement = document.querySelector('.js-add-button');
 const saveButtonElement = document.querySelector('.js-save-button');
 const formFieldsElement = document.querySelector('.js-form-fields');
-const formItemElement = formFieldsElement.querySelector('.js-form-fields__item');
 const savedDataElement = document.querySelector('.js-saved-data');
 
-function resetFormItemElement(elem)
+const resetFormItemElement = (elem) =>
 {
     let inputElements = elem.parentElement.querySelectorAll('input');
     inputElements.forEach((element) =>
@@ -43,7 +42,7 @@ const moveDownFormItem = (elem) =>
     }
 }
 
-function saveFormData()
+const saveFormData = () =>
 {
     let dict = {};
     const formFieldsChildrenArray = [...formFieldsElement.children];
@@ -58,19 +57,35 @@ function saveFormData()
     savedDataElement.textContent = JSON.stringify(dict);
 }
 
-formItemElement.querySelector('.js-item-delete-button').addEventListener('click', removeFormItemElement);
-formItemElement.querySelector('.js-item-up-button').addEventListener('click', moveUpFormItem);
-formItemElement.querySelector('.js-item-down-button').addEventListener('click', moveDownFormItem);
-
-function addFormItemElement()
+const createFormItemElement = () =>
 {
-    let formItemElementClone = formFieldsElement.lastElementChild.cloneNode(true);
-    formFieldsElement.lastElementChild.after(formItemElementClone);
-    formItemElementClone.querySelector('.js-item-delete-button').addEventListener('click', removeFormItemElement);
-    formItemElementClone.querySelector('.js-item-up-button').addEventListener('click', moveUpFormItem);
-    formItemElementClone.querySelector('.js-item-down-button').addEventListener('click', moveDownFormItem);
+    let divElement = document.createElement('div');
+    let firstInputElement = document.createElement('input');
+    let secondInputElement = document.createElement('input');
+    let moveUpButtonElement = document.createElement('button');
+    let moveDownButtonElement = document.createElement('button');
+    let removeButtonElement = document.createElement('button');
 
+    divElement.classList.add('form-fields__item');
+    firstInputElement.type = "text";
+    secondInputElement.type = "text";
+    moveUpButtonElement.textContent = '↑';
+    moveDownButtonElement.textContent = '↓';
+    removeButtonElement.textContent = 'x';
+    
+    divElement.append(firstInputElement);
+    divElement.append(secondInputElement);
+    divElement.append(moveUpButtonElement);
+    divElement.append(moveDownButtonElement);
+    divElement.append(removeButtonElement);
+    formFieldsElement.append(divElement);
+
+    moveUpButtonElement.addEventListener('click', moveUpFormItem);
+    moveDownButtonElement.addEventListener('click', moveDownFormItem)
+    removeButtonElement.addEventListener('click', removeFormItemElement);
 }
 
-addButtonElement.addEventListener('click', addFormItemElement);
+addButtonElement.addEventListener('click', createFormItemElement);
 saveButtonElement.addEventListener('click', saveFormData);
+
+createFormItemElement();
